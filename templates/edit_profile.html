@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block body %}
+  <h2>Edit Profile - {{ session.openid }}</h2>
+  <form action="" method=post>
+    <dl>
+      <dt>Name
+      <dd><input type=text name=name size=30 value="{{ form.name }}">
+      <dt>E-Mail
+      <dd><input type=text name=email size=30 value="{{ form.email }}">
+      <dt>Sex
+      <dd><select name=sex required>
+        {% if form.sex == 'Male' %}
+          <option selected value="Male">Male</option>
+        {% else %}
+          <option value="Male">Male</option>
+        {% endif %}
+
+        {% if form.sex == 'Female' %}
+          <option selected value="Female">Female</option>
+        {% else %}
+          <option value="Female">Female</option>
+        {% endif %}
+      </select>
+      <dt>Favorite
+      {% for i in range(users_len) %}
+        {% if form.favorite[users[i].id] == '1' %}
+          <dd><input type="checkbox" name="{{ users[i].id }}" checked> {{ users[i].name + ' - ' + users[i].openid }}
+        {% else %}
+          <dd><input type="checkbox" name="{{ users[i].id }}"> {{ users[i].name + ' - ' + users[i].openid }}
+        {% endif %}
+      {% endfor %}
+    </dl>
+    <p>
+      <input type=submit value="Update profile">
+      <input type=submit name=delete value="Delete">
+  </form>
+{% endblock %}
